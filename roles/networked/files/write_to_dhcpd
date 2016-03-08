@@ -1,0 +1,2 @@
+#!/bin/sh
+cat > /etc/dhcp/dhcpd.conf $1

@@ -1,0 +1,2 @@
+#!/bin/sh
+python /opt/boardfarm/devices/local_debian_setup.py turn_on_pppoe

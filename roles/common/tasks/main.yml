@@ -1,0 +1,28 @@
+---
+# This Playbook runs all the controller plays in the deployment
+
+- name: "add admin group if not there"
+  group: name=admin state=present
+  become: yes
+
+- name: "Install admin user if not there"
+  user: name="{{admin_user}}" groups=admin
+  become: yes
+
+- name: 'Copy keys to admin'
+  authorized_key: user="{{admin_user}}" key="{{ lookup('file', item) }}"
+  with_fileglob:
+    - ./admin_keys/*
+
+- name: 'added to sudoers for NOPASSWD'
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%admin*' line='%admin ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' backup=yes"
+  become: yes
+
+
+#- name: "initialize password"
+#  debug: lookup('password', "../../../credentials/" + ansible_hostname + "/" + admin_user +"/password.txt")
+
+#- name: "Set new password for admin"
+#  user: name="{{admin_user}}" update_password=always password={{item}}
+#  with_password: "../../../credentials/{{ansible_hostname}}/{{admin_user}}/password.txt encrypt=md5_crypt"
+#  become: yes

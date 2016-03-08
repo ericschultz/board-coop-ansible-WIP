@@ -1,0 +1,24 @@
+[runner]
+#ansible-runner ansible_ssh_user=ci20 ansible_ssh_pass=ci20
+
+[db120:children]
+db120-controller
+db120-networked
+
+[db120:vars]
+ansible_ssh_user=pi
+
+[db120-controller]
+rpi1
+
+[db120-networked]
+rpi2
+rpi3
+
+[db120-lan]
+rpi3
+
+[db120-wan]
+rpi2
+
+[powerstrips]

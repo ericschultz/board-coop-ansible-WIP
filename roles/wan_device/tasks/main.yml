@@ -1,0 +1,17 @@
+- name: copy over command wrappers
+  copy:
+    src: "./setup_wan"
+    dest: "/usr/bin/setup_wan"
+    owner: root
+    group: root
+    mode: "0744"
+  become: yes
+
+
+- name: add wan init to rc.local
+  lineinfile:
+    dest: /etc/rc.local
+    state: present
+    regexp: '^/usr/bin/setup_wan'
+    line: '/usr/bin/setup_wan'
+  become: yes

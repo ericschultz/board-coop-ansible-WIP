@@ -1,0 +1,23 @@
+- name: Install cu packages for serial port connecting
+  apt: pkg={{item}} state=installed
+  with_items:
+    - cu
+  become: yes
+
+- name: "make ttyUSB0 accessible to all users"
+  copy: src=60-ttyUSBx.rules dest=/etc/udev/rules.d/60-ttyUSBx.rules
+  become: yes
+
+
+- name: "Install experimenter user if not there"
+  user: name="test" groups=test
+  become: yes
+
+
+- name: "add authorized keys for experimenter"
+  authorized_key: user="test" key="{{ lookup('file', item) }}"
+  with_fileglob:
+    - ./users/*
+  become: yes
+
+# install a

@@ -1,0 +1,15 @@
+- hosts: "{{hosts_to_initialize}}"
+  pre_tasks:
+    - debug: msg="ansible_ssh_user is {{ansible_ssh_user}}"
+      when: ansible_ssh_user is defined
+    - debug: msg="default_admin is {{ role_admin_user|default(ansible_ssh_user) }}"
+      when: ansible_ssh_user is defined or role_admin_user is defined
+    - debug: msg="ansible_ssh_pass is {{ansible_ssh_pass}}"
+      when: ansible_ssh_pass is defined
+    - set_fact: ansible_become_pass={{ansible_ssh_pass}}
+      when: ansible_ssh_pass is defined
+    - set_fact: admin_user={{ role_admin_user|default(ansible_ssh_user) }}
+    - debug: msg="admin_user is {{admin_user}}"
+      when: admin_user is defined
+  roles:
+  - role: common

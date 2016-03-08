@@ -1,0 +1,115 @@
+---
+# This Playbook runs all the network plays in the deployment
+- name: Install required packages for network testing computers
+  apt: pkg={{item}} state=installed
+  with_items:
+    - openssh-client
+    - tftp-hpa
+    - tftpd-hpa
+    - curl
+    - socat
+    - tinyproxy
+    - iperf
+  become: yes
+
+- name: add conf groups
+  group:
+    name: "{{item}}"
+  become: yes
+  with_items:
+    - conf
+    - tester
+
+- name: add to group
+  user:
+    name: pi
+    append: yes
+    groups: conf
+  become: yes
+
+- name: copy over rc.local
+  copy:
+    src: "{{ item }}"
+    dest: "/etc"
+    owner: root
+    group: root
+    mode: "0744"
+  become: yes
+  with_fileglob:
+    - './rc.local
+
+#- name: install PAM login-logout shell script
+#  copy:
+#    src:
+#
+#- name: install PAM login-logout hook
+#  lineinfile:
+#    dest: '/etc/pam.d/sshd'
+#    regexp: '^session\s+optional\s+pam_exec.so\s+quiet\s+/etc/clean_up_test_user.sh$'
+#    line: 'session optional pam_exec.so quiet /etc/clean_up_test_user.sh'
+#    backup: yes
+#  become: yes
+#
+#
+#
+#- name: Restrict ssh to local network
+#  lineinfile:
+#    dest: '/etc/ssh/sshd_config'
+#    regexp: '^AllowUsers.*$'
+#    line: "AllowUsers *@10.0.*"
+#    validate: 'sshd -tf %s'
+#    backup: yes
+#  notify: 'restart sshd'
+#  become: yes
+#
+- name: "Install experimenter user if not there"
+  user: name="tester" groups=tester,conf #only accesssible via jump ssh so password doesn't matter
+  become: yes
+
+- name: "allow everyone to ping"
+  file:
+    path: '/bin/ping'
+    mode: 'u+s'
+  become: yes
+
+
+#- name: "record rc.local output"
+               # tell sh to display commands before execution      # send stderr from rc.local to a log file
+
+
+#- name: "give experimenter user control of various service config files"
+#  file:
+#    path: "{{item}}"
+#    group: conf
+#  with_items:
+#    - '/etc/tinyproxy.conf'
+#    - '/etc/default/isc-dhcp-server'
+#    - '/etc/dhcp/dhcpd.conf'
+#  become: yes
+
+- name: create testing_cmds
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^Cmnd_Alias TESTING_CMDS'
+    line: 'Cmnd_Alias TESTING_CMDS = /sbin/reboot, /usr/bin/start_lan_client, /usr/bin/ip_neigh_flush, /usr/bin/turn_on_pppoe, /usr/bin/restart_tftp_server'
+    validate: 'visudo -cf %s'
+  become: yes
+
+- name: give user access to testing_cmds
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^tester ALL'
+    line: 'tester ALL=(ALL) NOPASSWD: TESTING_CMDS'
+    validate: 'visudo -cf %s'
+  become: yes
+
+
+- name: pull in boardfarm
+  git:
+    repo: https://github.com/ericschultz/boardfarm.git
+    version: local_working
+    dest: /opt/boardfarm
+    force: yes
+  become: yes
