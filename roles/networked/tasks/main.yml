@@ -36,13 +36,27 @@
     mode: "0744"
   become: yes
   with_fileglob:
-    - './rc.local
+    - './rc.local'
 
-#- name: install PAM login-logout shell script
+- name: copy over commands
+  copy:
+    src: "{{item}}"
+    dest: "/usr/bin"
+    owner: root
+    group: root
+    mode: "0744"
+  become: yes
+  with_fileglob:
+    - './ip_neigh_flush'
+    - './restart_tftp_server'
+    - './turn_on_pppoe'
+    - './write_to_dhcpd'
+
+# - name: install PAM login-logout shell script
 #  copy:
 #    src:
 #
-#- name: install PAM login-logout hook
+# - name: install PAM login-logout hook
 #  lineinfile:
 #    dest: '/etc/pam.d/sshd'
 #    regexp: '^session\s+optional\s+pam_exec.so\s+quiet\s+/etc/clean_up_test_user.sh$'

@@ -13,6 +13,6 @@
   lineinfile:
     dest: /etc/rc.local
     state: present
-    regexp: '^/usr/bin/setup_lan'
+    insertbefore: '^exit 0'
     line: '/usr/bin/setup_lan'
   become: yes
