@@ -77,7 +77,10 @@
 #  become: yes
 #
 - name: "Install experimenter user if not there"
-  user: name="tester" groups=tester,conf #only accesssible via jump ssh so password doesn't matter
+  user:  #only accesssible via jump ssh so password doesn't matter
+    name: "tester"
+    password: "$6$n1V.7DrwPZ$8XgPr.NBUehriFL..bnGZrtJjfgv/V6yqSinpnBzMGTkcixWODFwTlA6eUaNqPnJIm1Y9AusY7IxocB6cJHLj0" #should be 'test'
+    groups: "tester,conf"
   become: yes
 
 - name: "allow everyone to ping"
