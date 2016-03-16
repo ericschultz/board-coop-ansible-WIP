@@ -9,6 +9,10 @@
   copy: src=60-ttyUSBx.rules dest=/etc/udev/rules.d/60-ttyUSBx.rules
   become: yes
 
+- name: "simplify bft with a bin"
+  copy: src=bft dest=/usr/bin/bft mode=0755
+  become: yes
+
 - name: "add test group"
   group: name=test
   become: yes

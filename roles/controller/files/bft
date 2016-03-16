@@ -1,0 +1,2 @@
+#!/bin/sh
+/opt/boardfarm/bft -c /opt/boardfarm/boardfarm_config_example.json $1
