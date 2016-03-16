@@ -1,3 +1,4 @@
+---
 - name: Install cu packages for serial port connecting
   apt: pkg={{item}} state=installed
   with_items:
@@ -8,16 +9,23 @@
   copy: src=60-ttyUSBx.rules dest=/etc/udev/rules.d/60-ttyUSBx.rules
   become: yes
 
-
-- name: "Install experimenter user if not there"
-  user: name="test" groups=test
+- name: "add test group"
+  group: name=test
   become: yes
 
+- name: "install experimenter users"
+  user: name="{{item.name}}" groups="test"
+  with_items: "{{users}}"
+  become: yes
 
 - name: "add authorized keys for experimenter"
-  authorized_key: user="test" key="{{ lookup('file', item) }}"
-  with_fileglob:
-    - ./users/*
+  authorized_key: user="{{item.0.name}}" key="{{ item.1 }}"
+  with_subelements:
+    - users
+    - authorized
   become: yes
 
-# install a
+
+- name: "limit test group to a single login"
+  copy: src=test_group_limit.conf dest="/etc/security/limits.d/test_group_limit.conf"
+  become: yes

@@ -1,3 +1,5 @@
 ---
 # This Playbook will initialize a set of hosts
-- include: init_a_device.yml hosts_to_initialize=initialize
+- hosts: db120-controller
+  roles:
+    - common

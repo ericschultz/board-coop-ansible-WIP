@@ -1,5 +1,11 @@
 ---
 # This Playbook would deploy everything
+- hosts:
+    - "*-networked"
+    - "*-controller"
+  roles:
+    - common
+
 - hosts: db120-networked
   roles:
     - networked
@@ -11,4 +17,8 @@
 - hosts: db120-wan
   roles:
     - wan_device
+
+- hosts: db120-controller
+  roles:
+    - controller
 #- include: init_a_device.yml hosts_to_initialize=all

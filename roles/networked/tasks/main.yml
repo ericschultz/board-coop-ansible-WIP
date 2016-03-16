@@ -121,12 +121,3 @@
     line: 'tester ALL=(ALL) NOPASSWD: TESTING_CMDS'
     validate: 'visudo -cf %s'
   become: yes
-
-
-- name: pull in boardfarm
-  git:
-    repo: https://github.com/ericschultz/boardfarm.git
-    version: local_working
-    dest: /opt/boardfarm
-    force: yes
-  become: yes

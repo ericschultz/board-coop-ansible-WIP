@@ -6,7 +6,7 @@
   become: yes
 
 - name: "Install admin user if not there"
-  user: name="{{admin_user}}" groups=admin
+  user: name="{{admin_user}}" groups=admin append=yes
   become: yes
 
 - name: 'Copy keys to admin'
@@ -16,6 +16,29 @@
 
 - name: 'added to sudoers for NOPASSWD'
   lineinfile: "dest=/etc/sudoers state=present regexp='^%admin*' line='%admin ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' backup=yes"
+  become: yes
+
+- name: "install python-apt"
+  shell: "apt-get -qq -y install python-apt"
+  become: yes
+
+- name: "install pip"
+  apt: pkg=python-pip state=installed update_cache=yes
+  become: yes
+
+- name: pull in boardfarm
+  git:
+    repo: https://github.com/ericschultz/boardfarm.git
+    version: local_working
+    dest: /opt/boardfarm
+    force: yes
+  become: yes
+
+- name: "install requirements for boardfarm"
+  pip:
+    requirements: "requirements.txt"
+    state: present
+    chdir: /opt/boardfarm
   become: yes
 
 
