@@ -1,2 +1,8 @@
 #!/bin/sh
+exec 2> /tmp/init_wan.log      # send stderr from rc.local to a log file
+exec 1>&2                      # send stdout to the same log file
+set -x
+
 python /opt/boardfarm/devices/local_debian_setup.py init_wan
+
+exit 0

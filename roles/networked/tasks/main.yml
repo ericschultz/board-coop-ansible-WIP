@@ -83,11 +83,17 @@
     groups: "tester,conf"
   become: yes
 
-- name: "allow everyone to ping"
+- name: "allow everyone to do the following"
   file:
-    path: '/bin/ping'
-    mode: 'u+s'
+    path: '{{item}}'
+    mode: '4755'
   become: yes
+  with_items:
+    - "/bin/ip"
+    - "/bin/ping"
+    - "/bin/ping6"
+    - "/sbin/xtables-multi"
+    - "/sbin/ifconfig"
 
 
 #- name: "record rc.local output"
@@ -109,7 +115,7 @@
     dest: /etc/sudoers
     state: present
     regexp: '^Cmnd_Alias TESTING_CMDS'
-    line: 'Cmnd_Alias TESTING_CMDS = /sbin/reboot, /usr/bin/start_lan_client, /usr/bin/ip_neigh_flush, /usr/bin/turn_on_pppoe, /usr/bin/restart_tftp_server'
+    line: 'Cmnd_Alias TESTING_CMDS = /sbin/reboot, /usr/bin/start_lan_client, /usr/bin/ip_neigh_flush, /usr/bin/turn_on_pppoe, /usr/bin/restart_tftp_server, /usr/bin/stop_lan_client'
     validate: 'visudo -cf %s'
   become: yes
 

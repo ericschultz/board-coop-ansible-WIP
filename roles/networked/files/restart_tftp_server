@@ -1,2 +1,4 @@
 #!/bin/sh
-python /opt/boardfarm/devices/local_debian_setup.py restart_tftp_server
+set -x
+
+python /opt/boardfarm/devices/local_debian_setup.py restart_tftp_server 1>&2  | tee /tmp/restart_tftp_server.log

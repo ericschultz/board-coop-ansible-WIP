@@ -5,6 +5,7 @@
     - "*-controller"
   roles:
     - common
+    - board_farm_git
 
 - hosts: db120-networked
   roles:

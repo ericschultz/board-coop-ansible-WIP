@@ -26,20 +26,7 @@
   apt: pkg=python-pip state=installed update_cache=yes
   become: yes
 
-- name: pull in boardfarm
-  git:
-    repo: https://github.com/ericschultz/boardfarm.git
-    version: local_working
-    dest: /opt/boardfarm
-    force: yes
-  become: yes
 
-- name: "install requirements for boardfarm"
-  pip:
-    requirements: "requirements.txt"
-    state: present
-    chdir: /opt/boardfarm
-  become: yes
 
 
 #- name: "initialize password"
