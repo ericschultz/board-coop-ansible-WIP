@@ -33,7 +33,7 @@
     dest: "/etc"
     owner: root
     group: root
-    mode: "0744"
+    mode: "0644"
   become: yes
   with_fileglob:
     - './rc.local'
@@ -113,7 +113,7 @@
 - name: create testing_cmds
   lineinfile:
     dest: /etc/sudoers
-    state: present
+    state: absent
     regexp: '^Cmnd_Alias TESTING_CMDS'
     line: 'Cmnd_Alias TESTING_CMDS = /sbin/reboot, /usr/bin/start_lan_client, /usr/bin/ip_neigh_flush, /usr/bin/turn_on_pppoe, /usr/bin/restart_tftp_server, /usr/bin/stop_lan_client'
     validate: 'visudo -cf %s'
@@ -122,7 +122,7 @@
 - name: give user access to testing_cmds
   lineinfile:
     dest: /etc/sudoers
-    state: present
+    state: absent
     regexp: '^tester ALL'
     line: 'tester ALL=(ALL) NOPASSWD: TESTING_CMDS'
     validate: 'visudo -cf %s'

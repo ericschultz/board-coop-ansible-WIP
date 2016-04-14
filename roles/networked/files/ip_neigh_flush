@@ -1,6 +1,0 @@
-#!/bin/sh
-set -x
-
-python /opt/boardfarm/devices/local_debian_setup.py ip_neigh_flush 1>&2 | tee /tmp/ip_neigh_flush.log
-
-exit 0

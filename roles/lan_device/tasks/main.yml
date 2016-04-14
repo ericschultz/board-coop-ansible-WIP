@@ -1,15 +1,4 @@
-- name: copy over command wrappers
-  copy:
-    src: "{{ item }}"
-    dest: "/usr/bin"
-    owner: root
-    group: root
-    mode: "0744"
-  become: yes
-  with_fileglob:
-    - './setup_lan'
-    - './start_lan_client'
-    - './stop_lan_client'
+
 
 - name: copy over default route
   copy:
@@ -25,7 +14,7 @@
 - name: add lan init to rc.local
   lineinfile:
     dest: /etc/rc.local
-    state: present
+    state: absent
     insertbefore: '^exit 0'
     line: '/usr/bin/setup_lan'
   become: yes

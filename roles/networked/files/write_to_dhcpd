@@ -1,8 +1,0 @@
-#!/bin/sh
-exec 2> /tmp/write_to_dhcpd.log      # send stderr from rc.local to a log file
-exec 1>&2                      # send stdout to the same log file
-set -x
-
-cat > /etc/dhcp/dhcpd.conf $1
-
-exit 0

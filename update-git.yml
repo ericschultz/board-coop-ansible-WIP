@@ -1,0 +1,8 @@
+---
+# This Playbook would deploy everything
+- hosts:
+    - "*-networked"
+    - "*-controller"
+  become: yes
+  roles:
+    - board_farm_git

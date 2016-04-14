@@ -1,0 +1,3 @@
+#!/bin/sh
+ssh -i ~/test tester1@rpi1
+

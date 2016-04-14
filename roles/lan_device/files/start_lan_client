@@ -1,6 +1,0 @@
-#!/bin/sh
-set -x
-
-
-python /opt/boardfarm/devices/local_debian_setup.py start_lan_client 1>&2 | tee /tmp/start_lan_client
-exit 0
