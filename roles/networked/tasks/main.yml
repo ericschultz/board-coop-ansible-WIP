@@ -12,105 +12,21 @@
     - iperf
   become: yes
 
-- name: add conf groups
+- name: add tester group
   group:
     name: "{{item}}"
   become: yes
   with_items:
-    - conf
     - tester
 
-- name: add to group
-  user:
-    name: pi
-    append: yes
-    groups: conf
-  become: yes
-
-- name: copy over rc.local
-  copy:
-    src: "{{ item }}"
-    dest: "/etc"
-    owner: root
-    group: root
-    mode: "0644"
-  become: yes
-  with_fileglob:
-    - './rc.local'
-
-- name: copy over commands
-  copy:
-    src: "{{item}}"
-    dest: "/usr/bin"
-    owner: root
-    group: root
-    mode: "0744"
-  become: yes
-  with_fileglob:
-    - './ip_neigh_flush'
-    - './restart_tftp_server'
-    - './turn_on_pppoe'
-    - './write_to_dhcpd'
-
-# - name: install PAM login-logout shell script
-#  copy:
-#    src:
-#
-# - name: install PAM login-logout hook
-#  lineinfile:
-#    dest: '/etc/pam.d/sshd'
-#    regexp: '^session\s+optional\s+pam_exec.so\s+quiet\s+/etc/clean_up_test_user.sh$'
-#    line: 'session optional pam_exec.so quiet /etc/clean_up_test_user.sh'
-#    backup: yes
-#  become: yes
-#
-#
-#
-#- name: Restrict ssh to local network
-#  lineinfile:
-#    dest: '/etc/ssh/sshd_config'
-#    regexp: '^AllowUsers.*$'
-#    line: "AllowUsers *@10.0.*"
-#    validate: 'sshd -tf %s'
-#    backup: yes
-#  notify: 'restart sshd'
-#  become: yes
-#
 - name: "Install experimenter user if not there"
   user:  #only accesssible via jump ssh so password doesn't matter
     name: "tester"
     password: "$6$n1V.7DrwPZ$8XgPr.NBUehriFL..bnGZrtJjfgv/V6yqSinpnBzMGTkcixWODFwTlA6eUaNqPnJIm1Y9AusY7IxocB6cJHLj0" #should be 'test'
-    groups: "tester,conf"
+    groups: "tester"
   become: yes
 
-- name: "allow everyone to do the following"
-  file:
-    path: '{{item}}'
-    mode: '4755'
-  become: yes
-  with_items:
-    - "/bin/ip"
-    - "/bin/ping"
-    - "/bin/ping6"
-    - "/sbin/xtables-multi"
-    - "/sbin/ifconfig"
-
-
-#- name: "record rc.local output"
-               # tell sh to display commands before execution      # send stderr from rc.local to a log file
-
-
-#- name: "give experimenter user control of various service config files"
-#  file:
-#    path: "{{item}}"
-#    group: conf
-#  with_items:
-#    - '/etc/tinyproxy.conf'
-#    - '/etc/default/isc-dhcp-server'
-#    - '/etc/dhcp/dhcpd.conf'
-#  become: yes
-
-- name: create testing_cmds
+- name: create testing_cmds alias in sudo
   lineinfile:
     dest: /etc/sudoers
     state: absent
@@ -119,7 +35,7 @@
     validate: 'visudo -cf %s'
   become: yes
 
-- name: give user access to testing_cmds
+- name: give user access to testing_cmds in sudo
   lineinfile:
     dest: /etc/sudoers
     state: absent

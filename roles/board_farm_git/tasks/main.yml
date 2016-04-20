@@ -2,7 +2,7 @@
 - name: pull in boardfarm
   git:
     repo: https://github.com/ericschultz/boardfarm.git
-    version: local_working
+    version: 'feature/non-root-tests'
     dest: /opt/boardfarm
     force: yes
   become: yes

@@ -1,4 +1,6 @@
-
+- name: install lan_setup on devices
+  shell: /opt/boardfarm/prepare_for_nonroot lan
+  become: yes
 
 - name: copy over default route
   copy:
@@ -10,11 +12,3 @@
   become: yes
   with_fileglob:
     - './set_default_local_area_route'
-
-- name: add lan init to rc.local
-  lineinfile:
-    dest: /etc/rc.local
-    state: absent
-    insertbefore: '^exit 0'
-    line: '/usr/bin/setup_lan'
-  become: yes

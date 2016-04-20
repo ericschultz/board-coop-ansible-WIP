@@ -1,17 +1,3 @@
-- name: copy over command wrappers
-  copy:
-    src: "./setup_wan"
-    dest: "/usr/bin/setup_wan"
-    owner: root
-    group: root
-    mode: "0744"
-  become: yes
-
-
-- name: add wan init to rc.local
-  lineinfile:
-    dest: /etc/rc.local
-    state: present
-    insertbefore: '^exit 0'
-    line: '/usr/bin/setup_wan'
+- name: install wan_setup on devices
+  shell: /opt/boardfarm/prepare_for_nonroot wan
   become: yes
