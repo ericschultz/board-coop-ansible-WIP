@@ -1,0 +1,20 @@
+---
+# Here's what you modify when you want to customize your boardfarm build
+boardfarm_repo: https://github.com/ericschultz/boardfarm.git
+boardfarm_repo_branch: 'local_working'
+
+#testing users on the controller
+controller_users:
+    - name: tester1
+      authorized:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJJLBnxjyFW6MnGFzeq5Fv4WFjueQSnHdC4sb/760UhvrOI/kh9+Ol5gSOW2xdWXoZeKZL3tr7xBQNimN8nnhSplpTfCt7ig2t6LdMlk6wPtJcN8M7Q4ccg3mwqaCWnMfv5XpaKDz4TJE+7p5hlgnkn32LiBlgS5KSAYJhYXLOJk94wpb1wNMlw+LDWFbpN6WxzrH6N9r8RF+JBtpJhT+++meRECyK2ZRfgrjHSPlbgtQGbTLbd0JSuHt+abfG8hALlcb99/7ZLSrBzMrZ/F5UnvZBFQCxmemln86h6nph4HlJslqWkto9A8rfYI/FDtVhH0cSMSJiqQghh4scx9y/ eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu" #example.pub
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9LGT/7cGqDAKgtoV1gKgdtfTewTIVuethmRTxjbD2Ur1x6gJhsycAvCkKikXcnYcW59aKxTtiJL6h/0qKe0PczdtBZINSfhb0wdhCZjPgG/4ozk6T8qLSwwbQCxYhpMkPkRCP2jhC1BSiim5Vs6/tqupiaNYBqS762WN7rN42vExxgTmfC6EZ7BP/+fwWG07Y1y0oO3X2mvkj80aQxpgoNs+ulCpn2LhpKu8O8mxSBGzdAS2eSF54SDb+4B65EtJ42tOn+4Q6oPI0yvV5PzeqaIgZWQiwvbqfSWmMI8Qtu2dgyAVUMzEGxCSbIaZSyRTfngCNARy67REjwo+eSmJT eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu" #test.pub
+    - name: jenkins
+      authorized:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZLeOFJiGUhR2ApOwsO8u/bFTboP/8n0qQY4o6UUrQplufXuJqwOARSQid38CMS52uuk+bpej1O+v7eljYeKWf7qp3cWZb4HIxL9AFFW2x3Jm0TnSMmZhLIRm90KYPe4ahxeX3c5ROVGaJeq2EIAaZ6hL3BGCO4fQTx/lzkxUR+2tgxj9XqHJMDLRjqamU4cSLuBRfDk0KJbjnjdXWPCJa5FbCaQiugcO244kMXQVDAS5l7M8/wCgBTs4+JtEEf/YZ8vHL2kTL/KCZV1CfC4gb5exzdS8fDVMCyasJLajFQmrFETyEfR+BtInscd+CHi2EHoHiE+lp2MY5kurRE33D eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu" #jenkins.pub
+
+#admin users
+admin_users:
+  - name: pi
+    authorized:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDN8Q277ayKtMyWxcPvFKevNl1U/k9Y94WRVFoRfognLWzahTp5xpZk1ToL2dOnlx6sZwHp+TR5u+eIRODNyvDoC8S+riKig3TLdHbqJCPgTfqheWqSPI5IsJkuMVfOMN4Fdkkbu3zEJdCU04epF/Shbv4Ekl5tjaIJaIRm2zj3imv/DafFQCFhjA9O2BdsP7LUbUPDAzC0lN9PXH8buf+3xiyVM1iYYPlgBssSmGIzMt+b921M3Zds6LZzVtbnaGJau4UMhCO+3QY2HM9swBAldBsapYQtS7taKuOSEKovhVQyCvUnuSffr38Bjbife+t9Q2YPtSrkyjqtS64r35rz eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu

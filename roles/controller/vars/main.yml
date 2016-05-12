@@ -1,5 +1,0 @@
-users:
-  - name: tester1
-    authorized:
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJJLBnxjyFW6MnGFzeq5Fv4WFjueQSnHdC4sb/760UhvrOI/kh9+Ol5gSOW2xdWXoZeKZL3tr7xBQNimN8nnhSplpTfCt7ig2t6LdMlk6wPtJcN8M7Q4ccg3mwqaCWnMfv5XpaKDz4TJE+7p5hlgnkn32LiBlgS5KSAYJhYXLOJk94wpb1wNMlw+LDWFbpN6WxzrH6N9r8RF+JBtpJhT+++meRECyK2ZRfgrjHSPlbgtQGbTLbd0JSuHt+abfG8hALlcb99/7ZLSrBzMrZ/F5UnvZBFQCxmemln86h6nph4HlJslqWkto9A8rfYI/FDtVhH0cSMSJiqQghh4scx9y/ eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu" #example.pub
-      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9LGT/7cGqDAKgtoV1gKgdtfTewTIVuethmRTxjbD2Ur1x6gJhsycAvCkKikXcnYcW59aKxTtiJL6h/0qKe0PczdtBZINSfhb0wdhCZjPgG/4ozk6T8qLSwwbQCxYhpMkPkRCP2jhC1BSiim5Vs6/tqupiaNYBqS762WN7rN42vExxgTmfC6EZ7BP/+fwWG07Y1y0oO3X2mvkj80aQxpgoNs+ulCpn2LhpKu8O8mxSBGzdAS2eSF54SDb+4B65EtJ42tOn+4Q6oPI0yvV5PzeqaIgZWQiwvbqfSWmMI8Qtu2dgyAVUMzEGxCSbIaZSyRTfngCNARy67REjwo+eSmJT eric@eric-HP-ENVY-17-Notebook-PC-Ubuntu" #test.pub

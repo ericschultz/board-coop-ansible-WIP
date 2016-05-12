@@ -1,8 +1,8 @@
 ---
 - name: pull in boardfarm
   git:
-    repo: https://github.com/ericschultz/boardfarm.git
-    version: 'feature/non-root-tests'
+    repo: "{{ boardfarm_repo }}"
+    version: "{{ boardfarm_repo_branch}}"
     dest: /opt/boardfarm
     force: yes
   become: yes

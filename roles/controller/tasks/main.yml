@@ -19,13 +19,13 @@
 
 - name: "install experimenter users"
   user: name="{{item.name}}" groups="test"
-  with_items: "{{users}}"
+  with_items: "{{controller_users}}"
   become: yes
 
 - name: "add authorized keys for experimenter"
   authorized_key: user="{{item.0.name}}" key="{{ item.1 }}"
   with_subelements:
-    - users
+    - controller_users
     - authorized
   become: yes
 

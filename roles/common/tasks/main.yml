@@ -2,20 +2,23 @@
 # This Playbook runs all the controller plays in the deployment
 
 - name: "add admin group if not there"
-  group: name=admin state=present
+  group: name=sudoers state=present
   become: yes
 
 - name: "Install admin user if not there"
-  user: name="{{admin_user}}" groups=admin append=yes
+  user: name="{{item.name}}" groups=sudoers append=yes
+  with_items: "{{ admin_users }}"
   become: yes
 
 - name: 'Copy keys to admin'
-  authorized_key: user="{{admin_user}}" key="{{ lookup('file', item) }}"
-  with_fileglob:
-    - ./admin_keys/*
+  authorized_key: user="{{item.0.name}}" key="{{ item.1 }}"
+  with_subelements:
+    - admin_users
+    - authorized
+  become: yes
 
 - name: 'added to sudoers for NOPASSWD'
-  lineinfile: "dest=/etc/sudoers state=present regexp='^%admin*' line='%admin ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' backup=yes"
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%sudoers*' line='%sudoers ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' backup=yes"
   become: yes
 
 - name: "install python-apt"
@@ -25,14 +28,3 @@
 - name: "install pip"
   apt: pkg=python-pip state=installed update_cache=yes
   become: yes
-
-
-
-
-#- name: "initialize password"
-#  debug: lookup('password', "../../../credentials/" + ansible_hostname + "/" + admin_user +"/password.txt")
-
-#- name: "Set new password for admin"
-#  user: name="{{admin_user}}" update_password=always password={{item}}
-#  with_password: "../../../credentials/{{ansible_hostname}}/{{admin_user}}/password.txt encrypt=md5_crypt"
-#  become: yes
